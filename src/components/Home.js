@@ -13,8 +13,6 @@ const Home = () => {
   const [selection, setSelection] = useState(null);
   const [fieldData, setFieldData] = useState();
 
-
-
   return (
     <div className="px-[2rem]">
       <h1>Farmwiseai Assignment</h1>
@@ -38,15 +36,19 @@ const Home = () => {
 
       <AddField setFieldData={setFieldData} />
 
-      {fieldData && (
-        <CreateField
-          FieldType={fieldData.FieldType}
-          FieldDisplayName={fieldData.FieldDisplayName}
-          FieldDataType={fieldData.FieldDataType}
-          Validation={fieldData.Validation}
-          IsMandatory={fieldData.IsMandatory}
-        />
-      )}
+      {/* {fieldData &&
+        fieldData.map((fieldData, i) => {
+          return (
+            <CreateField
+              key={i}
+              FieldType={fieldData.FieldType}
+              FieldDisplayName={fieldData.FieldDisplayName}
+              FieldDataType={fieldData.FieldDataType}
+              Validation={fieldData.Validation}
+              IsMandatory={fieldData.IsMandatory}
+            />
+          );
+        })} */}
     </div>
   );
 };
