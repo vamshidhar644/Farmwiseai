@@ -7,23 +7,23 @@ import {
   Select,
   Typography,
 } from '@mui/material';
+import CreateField from './CreateField';
 
 const Home = () => {
   const [selection, setSelection] = useState(null);
+  const [fieldData, setFieldData] = useState();
 
   return (
-    <div className="px-[6rem]">
+    <div className="px-[2rem]">
       <h1>Farmwiseai Assignment</h1>
 
-      <div className="p-6 w-fit">
+      <div className="p-3 w-fit">
         <Typography variant="p">Dynamic Data Collection</Typography>
         <FormControl fullWidth sx={{ marginTop: 2 }}>
           <InputLabel id="demo-simple-select-label">Select</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
             value={selection}
-            label="Age"
+            label="Data Collection"
             sx={{ minWidth: '12rem' }}
             onChange={(e) => setSelection(e.target.value)}
           >
@@ -34,7 +34,9 @@ const Home = () => {
         </FormControl>
       </div>
 
-      <AddField />
+      <AddField setFieldData={setFieldData} />
+
+      <CreateField conditions={fieldData && fieldData} />
     </div>
   );
 };

@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import FieldOptions from './FieldOptions';
 import { MenuItem, Select, TextField } from '@mui/material';
 
-const DynamicForm = () => {
+const DynamicForm = ({ setFieldData }) => {
   const [buttonClickCount, setButtonClickCount] = useState(0);
   const [fieldType, setFieldType] = useState('');
   const [fieldDisplayName, setFieldDisplayName] = useState('');
-  const [fieldDataType, setFieldDataType] = useState('String');
+  const [fieldDataType, setFieldDataType] = useState('');
   const [validation, setValidation] = useState('');
   const [isMandatory, setIsMandatory] = useState('No');
   const [dropdownOptions, setDropdownOptions] = useState([]);
@@ -14,51 +14,36 @@ const DynamicForm = () => {
   useEffect(() => {
     // Reset field values on button click
     setFieldDisplayName('');
-    setFieldDataType('String');
+    setFieldDataType('');
     setValidation('');
-    setIsMandatory('No');
+    setIsMandatory('');
     setDropdownOptions([]);
   }, [buttonClickCount]);
 
-  const handleButtonClick = () => {
-    if (buttonClickCount < 4) {
-      setButtonClickCount(buttonClickCount + 1);
-    }
-  };
-
-  const handleFieldTypeChange = (type) => {
-    setFieldType(type);
-    setFieldDisplayName('');
-    setFieldDataType('String');
-    setValidation('');
-    setIsMandatory('No');
-    setDropdownOptions([]);
-  };
-
-  const handleDataTypeChange = (dataType) => {
-    setFieldDataType(dataType);
-    setValidation('');
-    setIsMandatory('No');
-  };
-
   const handleConfirm = () => {
     // Print all values in the console
-    console.log({
+    const fieldData = {
       FieldType: fieldType,
       FieldDisplayName: fieldDisplayName,
       FieldDataType: fieldDataType,
       Validation: validation,
       IsMandatory: isMandatory,
-      DropdownOptions: dropdownOptions,
-    });
+      DropdownOptions: dropdownOptions && dropdownOptions,
+    };
+
+    setFieldData(fieldData);
   };
 
   // console.log(fieldType);
 
   return (
     <div>
-      <button onClick={handleButtonClick}>
-        Click me ({buttonClickCount}/4)
+      <button
+        onClick={() =>
+          buttonClickCount < 4 && setButtonClickCount(buttonClickCount + 1)
+        }
+      >
+        Add Field ({buttonClickCount}/4)
       </button>
 
       {buttonClickCount > 0 && (
@@ -66,10 +51,8 @@ const DynamicForm = () => {
           <div className="flex flex-col items-start">
             Field Type:
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
               value={fieldType}
-              onChange={(e) => handleFieldTypeChange(e.target.value)}
+              onChange={(e) => setFieldType(e.target.value)}
               label="Field Type"
               sx={{ minWidth: '12rem', textAlign: 'left' }}
             >
@@ -93,12 +76,10 @@ const DynamicForm = () => {
           <div className="flex flex-col items-start">
             Field Data Type:
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
               value={fieldDataType}
               label="Field Data Type"
               sx={{ minWidth: '12rem', textAlign: 'left' }}
-              onChange={(e) => handleDataTypeChange(e.target.value)}
+              onChange={(e) => setFieldDataType(e.target.value)}
             >
               <MenuItem value="String">String</MenuItem>
               <MenuItem value="Date">Date</MenuItem>
@@ -110,17 +91,12 @@ const DynamicForm = () => {
             fieldType={fieldType}
             fieldDataType={fieldDataType}
             validation={validation}
-            isMandatory={isMandatory}
-            fieldDisplayName={fieldDisplayName}
-            setValidation={setValidation}
-            setIsMandatory={setIsMandatory}
+            sendData={setValidation}
           />
 
           <div className="flex flex-col items-start">
             Mandatory:
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
               value={isMandatory}
               onChange={(e) => setIsMandatory(e.target.value)}
               sx={{ minWidth: '6rem', textAlign: 'left' }}
@@ -129,10 +105,10 @@ const DynamicForm = () => {
               <MenuItem value="No">No</MenuItem>
             </Select>
           </div>
+
+          <button onClick={handleConfirm}>Confirm</button>
         </div>
       )}
-
-      <button onClick={handleConfirm}>Confirm</button>
     </div>
   );
 };
