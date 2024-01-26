@@ -25,22 +25,6 @@ const FieldOptions = ({ fieldType, fieldDataType, sendData }) => {
           fieldType === 'dropdown' && (
             <Typography variant="p">No validation</Typography>
           )
-          // fieldType === 'dropdown' && (
-          //   <div className="flex flex-col">
-          //     Field Type Options:
-          //     <Select
-          //       value={dropdownOptions}
-          //       onChange={(e) => setDropdownOptions([e.target.value])}
-          //       sx={{ minWidth: '12rem', textAlign: 'left' }}
-          //     >
-          //       <MenuItem value="IT">IT</MenuItem>
-          //       <MenuItem value="CSE">CSE</MenuItem>
-          //       <MenuItem value="ECE">ECE</MenuItem>
-          //       <MenuItem value="Mech">Mech</MenuItem>
-          //       <MenuItem value="EEE">EEE</MenuItem>
-          //     </Select>
-          //   </div>
-          // )
         );
       case 'Date':
         return (

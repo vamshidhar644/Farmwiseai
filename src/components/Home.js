@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import AddField from './AddFields';
 import {
   FormControl,
@@ -12,6 +12,8 @@ import CreateField from './CreateField';
 const Home = () => {
   const [selection, setSelection] = useState(null);
   const [fieldData, setFieldData] = useState();
+
+
 
   return (
     <div className="px-[2rem]">
@@ -36,7 +38,15 @@ const Home = () => {
 
       <AddField setFieldData={setFieldData} />
 
-      <CreateField conditions={fieldData && fieldData} />
+      {fieldData && (
+        <CreateField
+          FieldType={fieldData.FieldType}
+          FieldDisplayName={fieldData.FieldDisplayName}
+          FieldDataType={fieldData.FieldDataType}
+          Validation={fieldData.Validation}
+          IsMandatory={fieldData.IsMandatory}
+        />
+      )}
     </div>
   );
 };

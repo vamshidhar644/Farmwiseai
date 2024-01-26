@@ -2,23 +2,24 @@ import React, { useState, useEffect } from 'react';
 import FieldOptions from './FieldOptions';
 import { MenuItem, Select, TextField } from '@mui/material';
 
-const DynamicForm = ({ setFieldData }) => {
+const AddFields = ({ setFieldData, clearAll }) => {
   const [buttonClickCount, setButtonClickCount] = useState(0);
+
   const [fieldType, setFieldType] = useState('');
   const [fieldDisplayName, setFieldDisplayName] = useState('');
   const [fieldDataType, setFieldDataType] = useState('');
   const [validation, setValidation] = useState('');
   const [isMandatory, setIsMandatory] = useState('No');
-  const [dropdownOptions, setDropdownOptions] = useState([]);
 
   useEffect(() => {
-    // Reset field values on button click
+    setFieldType('');
     setFieldDisplayName('');
     setFieldDataType('');
     setValidation('');
     setIsMandatory('');
-    setDropdownOptions([]);
   }, [buttonClickCount]);
+
+  // const clearAll = () => {};
 
   const handleConfirm = () => {
     // Print all values in the console
@@ -28,13 +29,14 @@ const DynamicForm = ({ setFieldData }) => {
       FieldDataType: fieldDataType,
       Validation: validation,
       IsMandatory: isMandatory,
-      DropdownOptions: dropdownOptions && dropdownOptions,
     };
 
     setFieldData(fieldData);
   };
 
-  // console.log(fieldType);
+  useEffect(() => {
+    setValidation();
+  }, [fieldDataType]);
 
   return (
     <div>
@@ -113,4 +115,4 @@ const DynamicForm = ({ setFieldData }) => {
   );
 };
 
-export default DynamicForm;
+export default AddFields;
